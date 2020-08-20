@@ -1,15 +1,26 @@
 import Link from 'next/link'
-import Layout from '../components/Layout'
+import styled from "styled-components"
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #F7F7F9
+  }
+`;
+
+//background: #F7F7F9;
+const CartPage = () => (
+  <div title="Cart">
+    <GlobalStyle />
+    
+    <h1>Cart 👋</h1>
     <p>
       <Link href="/about">
         <a>About</a>
       </Link>
     </p>
-  </Layout>
-)
+  </div>
+);
 
-export default IndexPage
+export default CartPage
