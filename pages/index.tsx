@@ -20,91 +20,123 @@ interface IProduct {
   id: number,
   name: string,
   value: number,
-  image: string
+  image: string,
+  amount?: number
 }
-
-const handleClick = () => {
-  // console.log('Handle click');
-  // revisar si supera e valor de compra para poder enviar a la  siguiente pagina y desploquear el boton
-  Router.push('/ThankYou')
-
-}
-
 
 const CartPage = () => {
-  const [userCart, setUserCart] = useState([]);
+  const [shoppingList, setShoppingList] = useState<IProduct[]>([]);
   const [userInput, setUserInput] = useState("");
   const [searchResult, setSearchResult] = useState<IProduct[]>([]);
-  
-  
+  const [productTotalCost, setProductTotalCost] = useState(0);
+  const [shippingCost, setShippingCost] = useState(0);
+  const [taxes, setTaxes] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  const handleCompleteOrder = () => {
+    // revisar si supera e valor de compra para poder enviar a la  siguiente pagina y desploquear el boton
+    Router.push('/ThankYou')
+  }
+
+  const handleAddProduct = (productId: Number) => {
+    // setShoppingList()
+    const productInList = shoppingList.find(product => {
+      return product.id === productId;
+    });
+
+    if (!productInList) {
+      let product: IProduct = products.find(element => {
+        return element.id === productId
+      })!;
+      if (product) {
+        product['amount'] = 1;
+        console.log('Agregandome')
+        setShoppingList([...shoppingList, product]);
+        // Add to productTotal
+      }
+      console.log('Adding product', shoppingList);
+    }
+  }
+
+  const handleRemoveProduct = (productId: Number) => {
+    setShoppingList(shoppingList.filter(item => item.id !== productId))
+  }
+
   const searchProduct = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
     setUserInput(input);
 
-    let results = products.filter(element => { 
-       return element.name.toLowerCase() === input.toLowerCase()
+    let results = products.filter(element => {
+      return element.name.toLowerCase() === input.toLowerCase()
     })
     setSearchResult(results);
-    // console.log('result array',  results);
-    // console.log('result array',  searchResult);
   }
 
   const renderCart = () => {
     console.log('userInput', userInput);
-    
-    if(userInput !== ""){
+    if (userInput !== "") {
       //si hay texto en el box
       console.log('buscando', searchResult)
-      if(searchResult.length === 0){
+      if (searchResult.length === 0) {
         return <p>Producto no encontrado</p>
-      }else{
-        return searchResult.map((result, i) => {
-          console.log('resutl')
+      } else {
+        return searchResult.map((result, index) => {
           return (
-            <div>
+            <li key={index}>
               <p>--Producto--</p>
-              <p>Name: ${result.name}</p>
+              <p>Name: {result.name}</p>
               <p>Price: ${result.value}</p>
-            </div>
+              <button type="button" onClick={() => { handleAddProduct(result.id) }}>Add</button>
+            </li>
           )
         });
       }
-      
-    }  
-    if (userCart.length > 0 && userInput === ""){
-      // si no hay texto en el box
-      // console.log('este es mi carrito')
-      return <p>Este es mi carrito</p>
+
     }
-    if (userCart.length === 0) {
+    if (shoppingList.length > 0 && userInput === "") {
+      // no hay texto en el box y el shopping list mayor de 0
+      // console.log('este es mi carrito')
+      return shoppingList.map((result, index) => {
+        return (
+          <li key={index}>
+            <p>--Producto--</p>
+            <p>Name: {result.name}</p>
+            <p>Price: ${result.value}</p>
+            <p>Amount: {result.amount}</p>
+            <button type="button" onClick={() => { handleRemoveProduct(result.id) }}>delete</button>
+          </li>
+        )
+      });
+    }
+    if (shoppingList.length === 0) {
       return (
         <div>
           <p>Your cart is empty</p>
           <p>seems like you haven't chosen what to buy...</p>
         </div>
       )
-    } 
+    }
   }
 
   return (
     <Layout title="Cart">
       <h1>Cart 👋</h1>
       <div>
-        <input type="text" placeholder='Search Products' onChange={(e)  => { searchProduct(e)}}></input>
-        <div>
+        <input type="text" placeholder='Search Products' onChange={(e) => { searchProduct(e) }}></input>
+        <ul>
           {renderCart()}
-        </div>
+        </ul>
       </div>
       <div>
         <p>Buy now and get it by date</p>
         <div>
-          <p>Products</p>
-          <p>Shipping cost</p>
-          <p>taxes</p>
-          <p>total</p>
+          <p>Products: ${productTotalCost}</p>
+          <p>Shipping cost: ${shippingCost}</p>
+          <p>taxes: ${taxes}</p>
+          <p>total: ${total}</p>
         </div>
       </div>
-      <button onClick={() => { handleClick() }}>Add</button>
+      <button onClick={() => { handleCompleteOrder() }}>Complete Order</button>
       {/* <p>
       <Link href="/ThankYou">
         <a>Thank you Page</a>
