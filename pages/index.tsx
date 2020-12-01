@@ -16,6 +16,7 @@ const products = [
   { id: 5, name: "Tea", value: 10, image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbetterstudio.com%2Fblog%2Finstagram-image-sizes%2F&psig=AOvVaw1vAqkHYnBo-Rf3vs0pbxhx&ust=1598039165782000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJjp7_jFqusCFQAAAAAdAAAAABAD' },
   { id: 6, name: "Coke", value: 10, image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbetterstudio.com%2Fblog%2Finstagram-image-sizes%2F&psig=AOvVaw1vAqkHYnBo-Rf3vs0pbxhx&ust=1598039165782000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJjp7_jFqusCFQAAAAAdAAAAABAD' },
   { id: 7, name: "Coke", value: 90, image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbetterstudio.com%2Fblog%2Finstagram-image-sizes%2F&psig=AOvVaw1vAqkHYnBo-Rf3vs0pbxhx&ust=1598039165782000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJjp7_jFqusCFQAAAAAdAAAAABAD' },
+  { id: 8, name: "Milk", value: 40, image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbetterstudio.com%2Fblog%2Finstagram-image-sizes%2F&psig=AOvVaw1vAqkHYnBo-Rf3vs0pbxhx&ust=1598039165782000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJjp7_jFqusCFQAAAAAdAAAAABAD' },
 ]
 
 const CartPage = () => {
